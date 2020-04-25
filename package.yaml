@@ -51,7 +51,7 @@ library:
   - Server
 
 executables:
-  climbing-log-exe:
+  climbing-log:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
