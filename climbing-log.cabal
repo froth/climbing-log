@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b096f016dc23cbdbab82dba463a95c0c8b8a1f663c68e00e19c7a50677f56bef
+-- hash: f8124691fbbebea593e6cd53c8d2b527125b12b1e20551d8abea1f55aa496c38
 
 name:           climbing-log
 version:        0.1.0.0
@@ -27,13 +27,29 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Environment
+      Import
+      Server
   other-modules:
+      Types
       Paths_climbing_log
   hs-source-dirs:
       src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , microlens-th
+    , mtl
+    , postgresql-simple
+    , resource-pool
+    , rio >=0.1.12.0
+    , servant-server
+    , wai
+    , wai-app-static
+    , wai-cors
+    , wai-extra
+    , warp
   default-language: Haskell2010
 
 executable climbing-log-exe
@@ -42,10 +58,22 @@ executable climbing-log-exe
       Paths_climbing_log
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , climbing-log
+    , microlens-th
+    , mtl
+    , postgresql-simple
+    , resource-pool
+    , rio >=0.1.12.0
+    , servant-server
+    , wai
+    , wai-app-static
+    , wai-cors
+    , wai-extra
+    , warp
   default-language: Haskell2010
 
 test-suite climbing-log-test
@@ -55,8 +83,20 @@ test-suite climbing-log-test
       Paths_climbing_log
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , climbing-log
+    , microlens-th
+    , mtl
+    , postgresql-simple
+    , resource-pool
+    , rio >=0.1.12.0
+    , servant-server
+    , wai
+    , wai-app-static
+    , wai-cors
+    , wai-extra
+    , warp
   default-language: Haskell2010

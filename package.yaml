@@ -19,11 +19,36 @@ extra-source-files:
 # common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/froth/climbing-log#readme>
 
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wpartial-fields
+- -Wredundant-constraints
+
 dependencies:
 - base >= 4.7 && < 5
+- rio >=0.1.12.0
+- aeson
+- mtl
+- servant-server
+- wai
+- wai-app-static
+- wai-cors
+- wai-extra
+- warp
+- postgresql-simple
+- resource-pool
+- microlens-th
 
 library:
   source-dirs: src
+  exposed-modules:
+  - Environment
+  - Import
+  - Server
 
 executables:
   climbing-log-exe:
