@@ -1,0 +1,8 @@
+cradle:
+  stack:
+    - path: ./test
+      component: climbing-log:test:climbing-log-test
+    - path: ./src
+      component: climbing-log:lib
+    - path: ./app
+      component: climbing-log:exe:climbing-log-exe
