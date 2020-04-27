@@ -19,6 +19,7 @@ import Network.Wai.Handler.Warp
 import Network.Wai.Middleware.ForceSSL
 import Servant
 import Data.Aeson
+import Grades
 
 startServer :: RIO Env ()
 startServer = do
@@ -35,14 +36,14 @@ buildApp = do
   env <- ask
   return . sslRedirect localstage . serve api . hoist $ env
 
-data Ascent
+data Ascent a
   = Ascent
-      { grade :: Text,
+      { grade :: Grade a,
         date :: Text
       } deriving (Generic, Eq, Show)
     deriving anyclass (FromJSON, ToJSON)
 
-type API = "ascents" :> Get '[JSON] [Ascent]
+type API = "ascents" :> Get '[JSON] [Ascent French]
 
 api :: Proxy API
 api = Proxy
@@ -59,8 +60,8 @@ hoist env = hoistServer api nat server
 server :: ServerT API (RIO env)
 server = return ascents
 
-ascents :: [Ascent]
+ascents :: [Ascent French]
 ascents = [
-    Ascent "7a" "1.1.1970",
-    Ascent "6a" "1.1.1980"
+    Ascent (Grade F7a) "1.1.1970",
+    Ascent (Grade F6b) "1.1.1980"
     ]
