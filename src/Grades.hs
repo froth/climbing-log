@@ -1,13 +1,13 @@
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances#-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingStrategies, AllowAmbiguousTypes #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Grades where
 
@@ -31,7 +31,7 @@ data Saxony = SVIIIb | SVIIIc | SIXa | SIXb deriving (Show, Enum, Eq, Ord)
 class GradeConvert a b where
   convert :: a -> b
 
-instance GradeConvert UIAA French where
+instance  GradeConvert UIAA French where
   convert = toEnum . fromEnum
 
 instance GradeConvert Saxony UIAA where
@@ -41,5 +41,11 @@ instance GradeConvert Saxony UIAA where
     where
       sEnum = fromEnum s
 
--- instance (GradeConvert a b, GradeConvert b c) => GradeConvert a c where
---     convert a = (convert @b @c) . (convert @a @b)
+class GradeConvertToFrench a where
+  convertToFrench :: a -> French
+
+instance (GradeConvert a UIAA) => GradeConvertToFrench a where
+    convertToFrench = (convert @UIAA @French) . (convert @a @UIAA)
+
+saxtoFrench :: Saxony -> French
+saxtoFrench = convertToFrench
