@@ -5,4 +5,4 @@ cradle:
     - path: ./src
       component: climbing-log:lib
     - path: ./app
-      component: climbing-log:exe:climbing-log-exe
+      component: climbing-log:exe:climbing-log
