@@ -9,15 +9,18 @@ module Types where
 import RIO
 import Grades
 import Data.Aeson
-
+import Data.Pool (Pool)
+import Database.PostgreSQL.Simple
 import Lens.Micro.TH
 
+newtype DatabaseUrl = DatabaseUrl ByteString
 
 data Stage = Prod | Dev
   deriving (Eq, Read, Show)
 
 data Env = Env
   { _appLogFunc :: !LogFunc
+  , _connectionPool :: !(Pool Connection)
   , _stage :: !Stage
   , _port :: !Int
   -- Add other app-specific configuration information here
@@ -28,6 +31,11 @@ makeLenses ''Env
 instance HasLogFunc Env where
   logFuncL = appLogFunc
 
+class WithConnectionPool env where
+  connectionPoolL :: Lens' env (Pool Connection)
+
+instance WithConnectionPool Env where
+  connectionPoolL = connectionPool
 
 class WithStage env where
   stageL :: Lens' env Stage
@@ -48,4 +56,8 @@ data Ascent a
       } deriving (Generic, Eq, Show)
     deriving anyclass (FromJSON, ToJSON)
 
-newtype User = User Text
+data User = User {
+  userId :: Int,
+  email :: Text,
+  pwHash :: ByteString
+} deriving (Generic, FromRow)

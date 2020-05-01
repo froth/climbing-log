@@ -42,6 +42,7 @@ dependencies:
 - postgresql-simple
 - resource-pool
 - microlens-th
+- bcrypt
 
 library:
   source-dirs: src

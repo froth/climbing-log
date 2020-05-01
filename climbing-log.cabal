@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ccaf26241fa7b7e61e76de0b4f7d3542618ef824b28d6d79af4cd145ba4718e7
+-- hash: b56497265a3ebfaf7bdafe02ca4231bd7677ef16d858e26d63da388f7f0ea005
 
 name:           climbing-log
 version:        0.1.0.0
@@ -33,7 +33,9 @@ library
   other-modules:
       API
       Ascents
+      Auth
       Grades
+      Persistence
       Types
       Paths_climbing_log
   hs-source-dirs:
@@ -42,6 +44,7 @@ library
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bcrypt
     , microlens-th
     , mtl
     , postgresql-simple
@@ -65,6 +68,7 @@ executable climbing-log
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bcrypt
     , climbing-log
     , microlens-th
     , mtl
@@ -90,6 +94,7 @@ test-suite climbing-log-test
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bcrypt
     , climbing-log
     , microlens-th
     , mtl

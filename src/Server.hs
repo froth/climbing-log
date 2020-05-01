@@ -18,6 +18,7 @@ import Network.Wai.Middleware.ForceSSL
 import Servant
 import API
 import Ascents
+import Auth
 
 startServer :: RIO Env ()
 startServer = do
@@ -28,11 +29,11 @@ startServer = do
   application <- buildApp
   liftIO $ run localPort application
 
-buildApp :: (WithStage env) => RIO env Application
+buildApp :: (WithConnectionPool env, WithStage env) => RIO env Application
 buildApp = do
   localstage <- view stageL
   env <- ask
-  return . sslRedirect localstage . serveWithContext api basicAuthServerContext . hoist $ env
+  return . sslRedirect localstage . serveWithContext api (basicAuthServerContext env) . hoist $ env
 
 api :: Proxy API
 api = Proxy
@@ -51,13 +52,6 @@ hoist env = hoistServerWithContext api ctx nat server
 server :: ServerT API (RIO env)
 server _ = return ascents
 
-authCheck :: BasicAuthCheck User
-authCheck =
-  let check (BasicAuthData username password) =
-        if username == "servant" && password == "server"
-        then return (Authorized (User "servant"))
-        else return Unauthorized
-  in BasicAuthCheck check
 
-basicAuthServerContext :: Context (BasicAuthCheck User ': '[])
-basicAuthServerContext = authCheck :. EmptyContext
+basicAuthServerContext :: WithConnectionPool env => env -> Context (BasicAuthCheck User ': '[])
+basicAuthServerContext env = (authCheck env) :. EmptyContext
