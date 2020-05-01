@@ -1,11 +1,9 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE DeriveAnyClass #-}
 
 module Server
   ( startServer,
@@ -18,8 +16,8 @@ import Network.Wai
 import Network.Wai.Handler.Warp
 import Network.Wai.Middleware.ForceSSL
 import Servant
-import Data.Aeson
-import Grades
+import API
+import Ascents
 
 startServer :: RIO Env ()
 startServer = do
@@ -34,16 +32,7 @@ buildApp :: (WithStage env) => RIO env Application
 buildApp = do
   localstage <- view stageL
   env <- ask
-  return . sslRedirect localstage . serve api . hoist $ env
-
-data Ascent a
-  = Ascent
-      { grade :: Grade a,
-        date :: Text
-      } deriving (Generic, Eq, Show)
-    deriving anyclass (FromJSON, ToJSON)
-
-type API = "ascents" :> Get '[JSON] [Ascent French]
+  return . sslRedirect localstage . serveWithContext api basicAuthServerContext . hoist $ env
 
 api :: Proxy API
 api = Proxy
@@ -53,15 +42,22 @@ sslRedirect Dev = id
 sslRedirect Prod = forceSSL
 
 hoist :: forall env . env -> Server API
-hoist env = hoistServer api nat server
+hoist env = hoistServerWithContext api ctx nat server
   where nat :: RIO env a -> Servant.Handler a
         nat act = Servant.Handler $ ExceptT $ try $ runRIO env act
+        ctx :: Proxy '[BasicAuthCheck User]
+        ctx = Proxy
 
 server :: ServerT API (RIO env)
-server = return ascents
+server _ = return ascents
 
-ascents :: [Ascent French]
-ascents = [
-    Ascent (Grade F7a) "1.1.1970",
-    Ascent (Grade F6b) "1.1.1980"
-    ]
+authCheck :: BasicAuthCheck User
+authCheck =
+  let check (BasicAuthData username password) =
+        if username == "servant" && password == "server"
+        then return (Authorized (User "servant"))
+        else return Unauthorized
+  in BasicAuthCheck check
+
+basicAuthServerContext :: Context (BasicAuthCheck User ': '[])
+basicAuthServerContext = authCheck :. EmptyContext

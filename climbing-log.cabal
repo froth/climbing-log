@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b324d91e60eafc2aa1ee6fdbb0dcbf869abf661e2d92482a5a8e655a5f8401a3
+-- hash: ccaf26241fa7b7e61e76de0b4f7d3542618ef824b28d6d79af4cd145ba4718e7
 
 name:           climbing-log
 version:        0.1.0.0
@@ -31,6 +31,8 @@ library
       Import
       Server
   other-modules:
+      API
+      Ascents
       Grades
       Types
       Paths_climbing_log

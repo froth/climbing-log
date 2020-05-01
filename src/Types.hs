@@ -1,9 +1,14 @@
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 module Types where
 
 import RIO
+import Grades
+import Data.Aeson
 
 import Lens.Micro.TH
 
@@ -35,3 +40,12 @@ class WithPort env where
 
 instance WithPort Env where
   portL = port
+
+data Ascent a
+  = Ascent
+      { grade :: Grade a,
+        date :: Text
+      } deriving (Generic, Eq, Show)
+    deriving anyclass (FromJSON, ToJSON)
+
+newtype User = User Text
