@@ -60,6 +60,8 @@ data Ascent a
 
 newtype Email = Email Text deriving newtype (FromField)
 
+newtype Password = Password Text
+
 newtype PasswordHash = PasswordHash ByteString deriving newtype (FromField)
 
 data User = User {
