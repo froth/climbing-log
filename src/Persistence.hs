@@ -7,8 +7,8 @@ import Data.Pool
 import Database.PostgreSQL.Simple
 import Import
 
-getUser :: WithConnectionPool env => ByteString -> RIO env (Maybe User)
-getUser mail = do 
+getUser :: WithConnectionPool env => Email -> RIO env (Maybe User)
+getUser (Email mail) = do 
     pool <- view connectionPoolL
     liftIO (getUser' pool)
     where 

@@ -3,6 +3,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE GeneralisedNewtypeDeriving #-}
 {-# LANGUAGE DerivingStrategies #-}
 module Types where
 
@@ -11,6 +12,7 @@ import Grades
 import Data.Aeson
 import Data.Pool (Pool)
 import Database.PostgreSQL.Simple
+import Database.PostgreSQL.Simple.FromField
 import Lens.Micro.TH
 
 newtype DatabaseUrl = DatabaseUrl ByteString
@@ -56,8 +58,12 @@ data Ascent a
       } deriving (Generic, Eq, Show)
     deriving anyclass (FromJSON, ToJSON)
 
+newtype Email = Email Text deriving newtype (FromField)
+
+newtype PasswordHash = PasswordHash ByteString deriving newtype (FromField)
+
 data User = User {
   userId :: Int,
-  email :: Text,
-  pwHash :: ByteString
+  email :: Email,
+  pwHash :: PasswordHash
 } deriving (Generic, FromRow)
