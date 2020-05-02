@@ -17,7 +17,6 @@ jobs:
       with:
         ghc-version: '8.8.3'
         stack-version: 'latest'
-    
     - name: Cache stack global package db
       id:   stack-global
       uses: actions/cache@v1
