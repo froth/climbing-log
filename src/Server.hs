@@ -1,9 +1,4 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE NoImplicitPrelude #-}
 
 module Server
   ( startServer,
@@ -12,6 +7,7 @@ where
 
 import Control.Monad.Except (ExceptT(..))
 import Import
+import EnvTypes
 import Network.Wai
 import Network.Wai.Handler.Warp
 import Network.Wai.Middleware.ForceSSL

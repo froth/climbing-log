@@ -1,6 +1,4 @@
-{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE TypeOperators #-}
 
 module API where
 

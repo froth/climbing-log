@@ -1,12 +1,12 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
 module Environment where
 
 import Import
+import EnvTypes
 import qualified RIO.Map as Map
 
 import qualified RIO.Text as T
 import RIO.Process
+
 
 portFromPC :: ProcessContext -> Int
 portFromPC pc = 

@@ -1,11 +1,9 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-
 module Persistence where
 
 import Data.Pool
 import Database.PostgreSQL.Simple
 import Import
+import EnvTypes
 
 getUser :: WithConnectionPool env => Email -> RIO env (Maybe User)
 getUser (Email mail) = do 

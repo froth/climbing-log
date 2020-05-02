@@ -1,7 +1,7 @@
-{-# LANGUAGE NoImplicitPrelude #-}
 module Main where
 
 import Import
+import EnvTypes
 import RIO.Process
 import Environment
 import Server

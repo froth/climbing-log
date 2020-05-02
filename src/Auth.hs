@@ -1,12 +1,8 @@
-{-# LANGUAGE BlockArguments #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-
 module Auth where
 
 import Crypto.BCrypt
 import Import
+import EnvTypes
 import Persistence
 import Servant
 

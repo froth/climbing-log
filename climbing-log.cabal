@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b56497265a3ebfaf7bdafe02ca4231bd7677ef16d858e26d63da388f7f0ea005
+-- hash: 801c9ff4935614fcaf5d740ad450e43369b3e1f41b9132031650e0f284a04728
 
 name:           climbing-log
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       Environment
       Import
       Server
+      EnvTypes
   other-modules:
       API
       Ascents
@@ -40,6 +41,7 @@ library
       Paths_climbing_log
   hs-source-dirs:
       src
+  default-extensions: NoImplicitPrelude DerivingStrategies OverloadedStrings LambdaCase TypeOperators ScopedTypeVariables TypeApplications DeriveGeneric
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
   build-depends:
       aeson
@@ -64,6 +66,7 @@ executable climbing-log
       Paths_climbing_log
   hs-source-dirs:
       app
+  default-extensions: NoImplicitPrelude DerivingStrategies OverloadedStrings LambdaCase TypeOperators ScopedTypeVariables TypeApplications DeriveGeneric
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
@@ -90,6 +93,7 @@ test-suite climbing-log-test
       Paths_climbing_log
   hs-source-dirs:
       test
+  default-extensions: NoImplicitPrelude DerivingStrategies OverloadedStrings LambdaCase TypeOperators ScopedTypeVariables TypeApplications DeriveGeneric
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson

@@ -1,16 +1,12 @@
-{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE DerivingStrategies, AllowAmbiguousTypes #-}
-{-# LANGUAGE FlexibleInstances #-}
 
 module Grades where
 
+import RIO
+import RIO.Partial
 import Data.Aeson
-import GHC.Generics
 
 newtype Grade a = Grade a deriving (Generic, Eq, Show)
     deriving newtype (FromJSON, ToJSON)
@@ -39,11 +35,7 @@ instance GradeConvert Saxony UIAA where
     where
       sEnum = fromEnum s
 
-class GradeConvertToFrench a where
-  convertToFrench :: a -> French
-
-instance (GradeConvert a UIAA) => GradeConvertToFrench a where
-    convertToFrench = (convert @UIAA @French) . (convert @a @UIAA)
-
 saxtoFrench :: Saxony -> French
-saxtoFrench = convertToFrench
+saxtoFrench sax = convert uiaa
+  where uiaa :: UIAA
+        uiaa = convert sax
