@@ -17,31 +17,6 @@ jobs:
       with:
         ghc-version: '8.8.3'
         stack-version: 'latest'
-    - name: Cache stack global package db
-      id:   stack-global
-      uses: actions/cache@v1
-      with:
-        path: ~/.stack
-        key: ${{ runner.os }}-stack-global-${{ hashFiles('**.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-stack-global
-    - name: Cache stack-installed programs in ~/.local/bin
-      id:   stack-programs
-      uses: actions/cache@v1
-      with:
-        path: ~/.local/bin
-        key: ${{ runner.os }}-stack-programs-${{ hashFiles('**.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-stack-programs
-    # stack's local package dbs for the project and each package
-    - name: Cache .stack-work
-      uses: actions/cache@v1
-      with:
-        path: .stack-work
-        key: ${{ runner.os }}-stack-work-${{ hashFiles('**.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-stack-work
-
     - name: Build
       run: stack build
     - name: Run tests
