@@ -25,14 +25,6 @@ jobs:
         key: ${{ runner.os }}-stack-global-${{ hashFiles('**.yaml') }}
         restore-keys: |
           ${{ runner.os }}-stack-global
-    - name: Cache stack-installed programs in ~/.local/bin
-      id:   stack-programs
-      uses: actions/cache@v1
-      with:
-        path: ~/.local/bin
-        key: ${{ runner.os }}-stack-programs-${{ hashFiles('**.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-stack-programs
     # stack's local package dbs for the project and each package
     - name: Cache .stack-work
       uses: actions/cache@v1
