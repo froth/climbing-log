@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 801c9ff4935614fcaf5d740ad450e43369b3e1f41b9132031650e0f284a04728
+-- hash: 390af72f618e12e02c2bf08494eb0124b683a34c40fa96af28b31b9f46a36434
 
 name:           climbing-log
 version:        0.1.0.0
@@ -31,13 +31,13 @@ library
       Import
       Server
       EnvTypes
+      Auth
+      Types
   other-modules:
       API
       Ascents
-      Auth
       Grades
       Persistence
-      Types
       Paths_climbing_log
   hs-source-dirs:
       src
@@ -90,6 +90,7 @@ test-suite climbing-log-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      AuthSpec
       Paths_climbing_log
   hs-source-dirs:
       test
@@ -100,6 +101,7 @@ test-suite climbing-log-test
     , base >=4.7 && <5
     , bcrypt
     , climbing-log
+    , hspec
     , microlens-th
     , mtl
     , postgresql-simple

@@ -54,6 +54,7 @@ dependencies:
 - microlens-th
 - bcrypt
 
+
 library:
   source-dirs: src
   exposed-modules:
@@ -61,6 +62,8 @@ library:
   - Import
   - Server
   - EnvTypes
+  - Auth
+  - Types
 
 executables:
   climbing-log:
@@ -83,3 +86,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - climbing-log
+    - hspec
