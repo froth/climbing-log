@@ -31,9 +31,6 @@ buildApp = do
   env <- ask
   return . sslRedirect localstage . serveWithContext api (basicAuthServerContext env) . hoist $ env
 
-api :: Proxy API
-api = Proxy
-
 sslRedirect :: Stage -> Middleware
 sslRedirect Dev = id
 sslRedirect Prod = forceSSL

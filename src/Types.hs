@@ -8,6 +8,7 @@ import Database.PostgreSQL.Simple
 import Database.PostgreSQL.Simple.FromField
 import Grades
 import RIO
+import Data.Swagger
 
 data Ascent a
   = Ascent
@@ -15,14 +16,16 @@ data Ascent a
         date :: Text
       }
   deriving (Generic, Eq, Show)
-  deriving anyclass (FromJSON, ToJSON)
+  deriving anyclass (FromJSON, ToJSON, ToSchema)
 
-newtype Email = Email Text deriving (Show, Eq)
+newtype Email = Email Text
+  deriving (Show, Eq)
   deriving newtype (FromField)
 
 newtype Password = Password Text deriving (Show, Eq)
 
-newtype PasswordHash = PasswordHash ByteString deriving (Show, Eq)
+newtype PasswordHash = PasswordHash ByteString
+  deriving (Show, Eq)
   deriving newtype (FromField)
 
 data User

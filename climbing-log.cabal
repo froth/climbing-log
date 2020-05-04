@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 390af72f618e12e02c2bf08494eb0124b683a34c40fa96af28b31b9f46a36434
+-- hash: d0aaef55352f90f65b257e5c30841606bff18e6649f7c194b2bf905eddaf351a
 
 name:           climbing-log
 version:        0.1.0.0
@@ -33,8 +33,8 @@ library
       EnvTypes
       Auth
       Types
-  other-modules:
       API
+  other-modules:
       Ascents
       Grades
       Persistence
@@ -45,6 +45,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
   build-depends:
       aeson
+    , aeson-pretty
     , base >=4.7 && <5
     , bcrypt
     , microlens-th
@@ -53,6 +54,8 @@ library
     , resource-pool
     , rio >=0.1.12.0
     , servant-server
+    , servant-swagger
+    , swagger2
     , wai
     , wai-app-static
     , wai-cors
@@ -63,6 +66,7 @@ library
 executable climbing-log
   main-is: Main.hs
   other-modules:
+      ApiDocGenerator
       Paths_climbing_log
   hs-source-dirs:
       app
@@ -70,6 +74,7 @@ executable climbing-log
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
+    , aeson-pretty
     , base >=4.7 && <5
     , bcrypt
     , climbing-log
@@ -79,6 +84,38 @@ executable climbing-log
     , resource-pool
     , rio >=0.1.12.0
     , servant-server
+    , servant-swagger
+    , swagger2
+    , wai
+    , wai-app-static
+    , wai-cors
+    , wai-extra
+    , warp
+  default-language: Haskell2010
+
+executable climbing-log-openapi
+  main-is: ApiDocGenerator.hs
+  other-modules:
+      Main
+      Paths_climbing_log
+  hs-source-dirs:
+      app
+  default-extensions: NoImplicitPrelude DerivingStrategies OverloadedStrings LambdaCase TypeOperators ScopedTypeVariables TypeApplications DeriveGeneric
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N -main-is ApiDocGenerator
+  build-depends:
+      aeson
+    , aeson-pretty
+    , base >=4.7 && <5
+    , bcrypt
+    , climbing-log
+    , microlens-th
+    , mtl
+    , postgresql-simple
+    , resource-pool
+    , rio >=0.1.12.0
+    , servant-server
+    , servant-swagger
+    , swagger2
     , wai
     , wai-app-static
     , wai-cors
@@ -98,6 +135,7 @@ test-suite climbing-log-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
+    , aeson-pretty
     , base >=4.7 && <5
     , bcrypt
     , climbing-log
@@ -108,6 +146,8 @@ test-suite climbing-log-test
     , resource-pool
     , rio >=0.1.12.0
     , servant-server
+    , servant-swagger
+    , swagger2
     , wai
     , wai-app-static
     , wai-cors
