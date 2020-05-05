@@ -10,9 +10,10 @@ import Grades
 import RIO
 import Data.Swagger
 
-data Ascent a
+data Ascent
   = Ascent
-      { grade :: Grade a,
+      { 
+        grade :: Grade,
         date :: Text
       }
   deriving (Generic, Eq, Show)

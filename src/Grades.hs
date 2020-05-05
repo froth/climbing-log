@@ -1,5 +1,4 @@
 {-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE DeriveAnyClass #-}
 
@@ -10,18 +9,13 @@ import RIO
 import RIO.Partial
 import Data.Swagger
 
-newtype Grade a = Grade a
+data Grade = UIAAGrade UIAA | FrenchGrade French 
   deriving (Generic, Eq, Show)
-  deriving newtype (FromJSON, ToJSON, ToSchema)
+  deriving anyclass (FromJSON, ToJSON, ToSchema)
 
-instance Functor Grade where
-  fmap f (Grade a) = Grade $ f a
+data UIAA = UVII | UVIIp | UVIIpVIIIm | UVIIIm | UVIII deriving (Show, Enum, Eq, Generic) deriving anyclass(ToSchema, ToJSON, FromJSON)
 
-data UIAA = UVII | UVIIp | UVIIpVIIIm | UVIIIm | UVIII deriving (Show, Enum, Eq)
-
-data French = F6b | F6bp | F6c | F6cp | F7a deriving (Show, Enum, Eq, Generic) deriving anyclass(ToSchema)
-
-instance ToJSON French
+data French = F6b | F6bp | F6c | F6cp | F7a deriving (Show, Enum, Eq, Generic) deriving anyclass(ToSchema, ToJSON, FromJSON)
 
 data Saxony = SVIIIb | SVIIIc | SIXa | SIXb deriving (Show, Enum, Eq, Ord)
 

@@ -3,12 +3,11 @@
 module API where
 
 import Import
-import Grades
 
 import Servant
 
-type API = "ascents" :> BasicAuth "routenbuch" User :> Get '[JSON] [Ascent French]
-type API2 = Get '[JSON] [Ascent French]
+type API = "ascents" :> BasicAuth "routenbuch" User :> Get '[JSON] [Ascent]
+type API2 = "ascents" :> Get '[JSON] [Ascent]
 
 api :: Proxy API
 api = Proxy
